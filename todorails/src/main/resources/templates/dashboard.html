@@ -12,7 +12,7 @@
 <div class="wrapper">
 
     <!-- Include the Sidebar Menu -->
-    <div th:replace="~{fragments/menu :: menu}"></div>
+        <div th:replace="~{fragments/menu :: menu}"></div>
 
     <!-- Header Section -->
     <div class="header" th:fragment="header">
@@ -24,48 +24,58 @@
             </div>
 
             <div class="heading-section">
-                <img th:src="@{/images/task.png}"/>
-                Dashboard
-
-                <br/>
-
-                <span style="font-size: 12px;">
-
-                    <span style="color: #007bff;"> Server Date:</span>
-                    <span th:text="${serverTime}"></span>
-
-                </span>
+                <img th:src="@{/images/task.png}" class="logo"/>
+                <div>
+                    My Dashboard
+                    <br/>
+                    <span style="font-size: 12px;">
+                        <!-- <span style="color: #007bff;"> Server Date:</span> -->
+                        <span th:text="${serverTime}"></span>
+                    </span>
+                </div>
             </div>
 
         </div>
 
 
         <div class="auth-links">
+            <img th:src="@{/images/logout.png}" class="logout" alt="Logout"/>
             <a th:href="@{/logout}">Logout</a>
+            
+            <div class="profile">
+                <button type="button" class="profile-toggle" onclick="toggleProfilePanel()" aria-expanded="false" aria-controls="profile-panel" aria-label="Open profile details">
+                    <svg class="profile-icon" viewBox="0 0 24 24" aria-hidden="true">
+                        <path d="M12 12a4 4 0 1 0-4-4 4 4 0 0 0 4 4Zm0 2c-4.42 0-8 2.24-8 5v1h16v-1c0-2.76-3.58-5-8-5Z"/>
+                    </svg>
+                </button>
+
+                <div id="profile-panel" class="profile-panel" th:if="${currentUser != null}">
+                    <div class="profile-panel-title">Signed in as</div>
+                    <div class="profile-panel-value" th:text="${currentUser.username}">Username</div>
+                    <div class="profile-panel-label">Email</div>
+                    <div class="profile-panel-value email" th:text="${currentUser.email}">Email</div>
+                </div>
+            </div>
         </div>
     </div>
-
     <!-- Main Content for Login Page -->
     <div class="container">
-            <!-- flash messages (from server) -->
-            <div style="margin-left: 5vw">
-                <div th:if="${errorMessage}" class="flash-alert flash-alert-danger">
-                    <p th:text="${errorMessage}"></p>
-                </div>
-
-                <div th:if="${successMessage}" class="flash-alert flash-alert-success">
-                    <p th:text="${successMessage}"></p>
-                </div>
+        <!-- flash messages (from server) -->
+        <div style="margin-left: 5vw">
+            <div th:if="${errorMessage}" class="flash-alert flash-alert-danger">
+                <p th:text="${errorMessage}"></p>
             </div>
 
-
-
-
-            <!-- Heading for Priority Section -->
-            <div class="priority-heading-container">
-                <h2 class="priority-heading">TODO Tasks Due Today</h2>
-                <a th:href="@{/addtask}" class="add-task-btn" style="text-decoration: none;">+ Add task</a>
+            <div th:if="${successMessage}" class="flash-alert flash-alert-success">
+                <p th:text="${successMessage}"></p>
             </div>
+        </div>
+
+        <!-- Heading for Priority Section -->
+        <div class="priority-heading-container">
+            <h2 class="priority-heading">TODO Tasks Due Today</h2>
+            <a th:href="@{/addtask}" class="add-task-btn" style="text-decoration: none;">+ Add task</a>
+        </div>
 
         <!-- Row A -->
         <div class="row-a">

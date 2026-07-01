@@ -1,4 +1,5 @@
-/* General Page and Logo Adjustments */
+/* General Page and 
+Adjustments */
 .logo-section {
     padding-left: 20px;
     display: flex;
@@ -12,6 +13,8 @@
     margin-left: 20vw;
     font-size: 18px;
     font-weight: bold;
+    display: flex;
+    align-items: center;
 }
 
 /* Styling for Row A */
@@ -213,6 +216,7 @@
     background-color: #007bff;
     color: white;
     padding: 8px 15px;
+    margin: 10px 20px;
     border: none;
     border-radius: 5px;
     cursor: pointer;

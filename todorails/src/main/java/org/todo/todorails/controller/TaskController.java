@@ -8,7 +8,9 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 import org.todo.todorails.model.Task;
+import org.todo.todorails.model.User;
 import org.todo.todorails.service.TaskService;
+import org.todo.todorails.service.UserService;
 
 import java.time.LocalDateTime;
 import java.time.ZoneOffset;
@@ -23,6 +25,9 @@ public class TaskController {
 
     @Autowired
     TaskService taskService;
+
+    @Autowired
+    UserService userService;
 
     @GetMapping("/dashboard")
     public String dashboard(Model model) {
@@ -45,6 +50,17 @@ public class TaskController {
 
         model.addAttribute("completedCount", taskService.countByCompleted(true));
         model.addAttribute("pendingCount",taskService.countByCompleted(false));
+
+        Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
+        if (authentication != null && authentication.isAuthenticated()) {
+            String username = authentication.getName();
+            User currentUser = userService.findByUsername(username);
+            if (currentUser != null) {
+                model.addAttribute("currentUser", currentUser);
+            } else {
+                model.addAttribute("currentUser", new User());
+            }
+        }
 
         return "dashboard";
     }
